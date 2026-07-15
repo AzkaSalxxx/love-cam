@@ -1,155 +1,41 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Sign Cam</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="macos-window">
+      <div class="window-titlebar">
+        <div class="control-buttons">
+          <span class="control close"></span>
+          <span class="control minimize"></span>
+          <span class="control zoom"></span>
+        </div>
+        <div class="window-title">love sign cam</div>
+      </div>
 
-* {
-  box-sizing: border-box;
-}
+      <div class="window-content">
+        <div class="screen">
+          <video id="video" autoplay playsinline></video>
+          <canvas id="canvas"></canvas>
+          <div id="status"></div>
+          
+          <button id="startBtn">
+            <svg viewBox="0 0 24 24" class="start-icon">
+              <path d="M12 8c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m7.34 11.23L16 16.89V18c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h3.38l1.62-2.17C9.37 2.3 9.68 2 10 2h4c.32 0 .63.3.99.73L16.61 5H20c.55 0 1 .45 1 1v12c0 .32-.3.63-.73.99l.01.24H19.34z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh; 
-  overflow: hidden; 
-  background: #fafafa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  -webkit-font-smoothing: antialiased;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-.page {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-}
-
-/* Window Utama macOS */
-.macos-window {
-  width: 90vw;
-  max-width: 800px; 
-  height: 85vh; 
-  max-height: 550px; 
-  background: #000; /* Latar hitam untuk layar kamera kosong */
-  border-radius: 10px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; 
-}
-
-/* Title Bar macOS dengan Teks di Tengah */
-.window-titlebar {
-  height: 38px;
-  background: linear-gradient(to bottom, #f3f3f3, #dfdfdf); /* Warna abu khas titlebar mac */
-  border-bottom: 1px solid #b3b3b3;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Memusatkan tulisan */
-  position: relative;
-  z-index: 10;
-}
-
-.control-buttons {
-  display: flex;
-  gap: 8px;
-  position: absolute;
-  left: 14px; /* Posisi tombol mac di kiri mutlak */
-}
-
-.control {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  position: relative;
-}
-
-.control.close { background-color: #ff5f57; border: 1px solid #e0443e; }
-.control.minimize { background-color: #ffbd2e; border: 1px solid #dea123; }
-.control.zoom { background-color: #28c940; border: 1px solid #1aab29; }
-
-/* Judul Blur Cam */
-.window-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: #444;
-  letter-spacing: 0.3px;
-}
-
-/* Konten / Layar Tanpa Jarak (Edge to edge) */
-.window-content {
-  flex: 1; 
-  padding: 0; /* Menghilangkan jarak lebar */
-  display: flex;
-}
-
-.screen {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #1e1e1e;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-video, canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Memastikan video proporsional memenuhi layar */
-}
-
-video {
-  display: none;
-}
-
-#status {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #ef4444;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
-  z-index: 999;
-}
-
-#status * {
-  display: none;
-}
-
-/* Tombol Mulai Kamera Melayang di Tengah Layar Sebelum Video Menyala */
-button {
-  position: absolute;
-  z-index: 50;
-  border: none;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  color: white;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 64px;
-  height: 64px;
-}
-
-button:hover {
-  background: rgba(0, 0, 0, 0.8);
-  transform: scale(1.05);
-}
-
-.start-icon {
-  width: 26px;
-  height: 26px;
-  fill: currentColor;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
